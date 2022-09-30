@@ -26,8 +26,7 @@ Run npm install to install dependencies
 
 # Usage
 
-Run npm starts
-Run npm starts
+Run npm start
 
 # License
 
