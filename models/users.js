@@ -1,5 +1,6 @@
-const sequelize = require('sequelize')
-const sequelizeConnect = require('../config/sequelizeConnect')
+const sequelize = require('sequelize');
+const sequelizeConnect = require('../config/sequelizeConnect');
+const bcrypt = require('bcrypt');
 
 const Users = sequelizeConnect.define('user', {
     id: {
@@ -32,3 +33,9 @@ const Users = sequelizeConnect.define('user', {
     modelName: 'users',
     underscored: true
 });
+
+Users.beforeCreate(async beef => {
+    beef.password = await bcrypt.hash(beef.password, 5)
+} )
+
+module.exports = Users
