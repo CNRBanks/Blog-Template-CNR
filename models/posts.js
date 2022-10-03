@@ -1,8 +1,8 @@
 const sequelize = require('sequelize');
 const sequelizeConnect = require('../config/sequelizeConnect');
-const bcrypt = require('bcrypt');
 
-const Users = sequelizeConnect.define('user', {
+
+const Posts = sequelizeConnect.define('post', {
     id: {
         type: sequelize.INTEGER,
         primaryKey: true,
@@ -10,21 +10,20 @@ const Users = sequelizeConnect.define('user', {
         autoIncrement: true
     },
 
-    username: {
-        type: sequelize.STRING,
-        allowNull: false,
-        validate: {
-            len: [5, 25],
-        }
+    content: {
+        type: sequelize.TEXT,
+        allowNull: false
     },
 
-    password: {
-        type: sequelize.STRING,
+    user_id: {
+        type: sequelize.INTEGER,
         allowNull: false,
-        validate: {
-            len: [10, 50],
+        reference: {
+            model: "Users",
+            key: 'id'
         }
     }
+
 
 }, {
     sequelize: sequelizeConnect,
@@ -34,8 +33,4 @@ const Users = sequelizeConnect.define('user', {
     underscored: true
 });
 
-Users.beforeCreate(async beef => {
-    beef.password = await bcrypt.hash(beef.password, 5)
-} )
-
-module.exports = Users
+module.exports = Posts
