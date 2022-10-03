@@ -1,30 +1,41 @@
-Testing push
-Testing push
+const sequelize = require('sequelize');
+const sequelizeConnect = require('../config/sequelizeConnect');
+const bcrypt = require('bcrypt');
 
-Testing push
-Testing push
+const Users = sequelizeConnect.define('user', {
+    id: {
+        type: sequelize.INTEGER,
+        primaryKey: true,
+        allowNull: false,
+        autoIncrement: true
+    },
 
-Testing push
-Testing push
+    username: {
+        type: sequelize.STRING,
+        allowNull: false,
+        validate: {
+            len: [5, 25],
+        }
+    },
 
-Testing push
-Testing push
+    password: {
+        type: sequelize.STRING,
+        allowNull: false,
+        validate: {
+            len: [10, 50],
+        }
+    }
 
-Testing push
-Testing push
+}, {
+    sequelize: sequelizeConnect,
+    timestamps: true,
+    freezeTableName: true,
+    modelName: 'users',
+    underscored: true
+});
 
-Testing push
-Testing push
+Users.beforeCreate(async beef => {
+    beef.password = await bcrypt.hash(beef.password, 5)
+} )
 
-Testing push
-Testing push
-
-Testing push
-Testing push
-
-Testing push
-Testing push
-
-Testing push
-Testing push
-
+module.exports = Users
