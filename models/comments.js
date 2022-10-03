@@ -15,6 +15,15 @@ const Comments = sequelizeConnect.define('comment', {
         allowNull: false
     },
 
+    post_id: {
+        type: sequelize.INTEGER,
+        allowNull: false,
+        reference: {
+            model: "Posts",
+            key: 'id'
+        }
+    },
+
     user_id: {
         type: sequelize.INTEGER,
         allowNull: false,
